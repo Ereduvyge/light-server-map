@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="map-shell">
+    <header class="page-header">
+        <div>
+            <h1>Light Server Map<span class="title-dot">.</span></h1>
+            <p class="subtitle">Infra, at a glance.</p>
+        </div>
+        <div class="header-actions">
+            <span class="live-label"><span class="live-dot" aria-hidden="true"></span> Updates every 10s</span>
+            <button class="quiet-button" type="button" hx-get="/components/nodes"
+                    hx-target="#node-grid" hx-swap="innerHTML">Refresh nodes</button>
+        </div>
+    </header>
+
+    <div class="map-toolbar">
+        <div class="legend" aria-label="Check status legend">
+            <span><i class="status-dot healthy" aria-hidden="true"></i> Healthy</span>
+            <span><i class="status-dot unhealthy" aria-hidden="true"></i> Unreachable</span>
+            <span><i class="status-dot unknown" aria-hidden="true"></i> Not checked</span>
+            <span><i class="status-dot disabled" aria-hidden="true"></i> Disabled</span>
+        </div>
+        <button id="reset-layout" class="text-button" type="button">Reset layout</button>
+    </div>
+
+    <p id="request-error" class="request-error" role="status" hidden>
+        Could not refresh. Check the connection and try again.
+    </p>
+
+    <section id="node-grid" class="node-grid" aria-label="Nodes">
+        {% include "components/nodes.html" %}
+    </section>
+
+    <footer class="map-footer">
+        <span class="desktop-hint">Drag the handles to arrange your map.</span>
+        <span>Open a node to see its software.</span>
+    </footer>
+</main>
+
+<dialog id="software-dialog" class="software-dialog" aria-labelledby="software-dialog-title">
+    <div class="dialog-heading">
+        <p class="eyebrow">Software on node</p>
+        <button class="close-button" type="button" data-close-dialog aria-label="Close software details">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                 aria-hidden="true" focusable="false">
+                <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+        </button>
+    </div>
+    <div id="software-content" aria-live="polite"></div>
+</dialog>
+{% endblock %}

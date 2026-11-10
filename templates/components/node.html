@@ -1,0 +1,15 @@
+<article id="node-{{ node.id }}" class="node-card" data-node-id="{{ node.id }}">
+    <button type="button" class="drag-handle" aria-label="Drag {{ node.name }}"
+            title="Drag to move">&#x283f;</button>
+    <button type="button" class="node-button" data-open-software="{{ node.id }}"
+            hx-get="/components/nodes/{{ node.id }}/software"
+            hx-trigger="click" hx-target="#software-content" hx-swap="innerHTML"
+            hx-sync="#software-content:replace"
+            aria-haspopup="dialog" aria-label="View software on {{ node.name }}">
+        <span class="node-details"
+              hx-get="/components/nodes/{{ node.id }}/status"
+              hx-trigger="every 10s" hx-target="this" hx-swap="innerHTML" hx-sync="this:drop">
+            {% include "components/node_details.html" %}
+        </span>
+    </button>
+</article>

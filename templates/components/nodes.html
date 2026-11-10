@@ -1,0 +1,9 @@
+{% for node in nodes %}
+    {% include "components/node.html" %}
+{% else %}
+    <div class="empty-state">
+        <img src="{{ url_for('static', path='imgs/node.png') }}" width="64" height="64" alt="">
+        <h2>A clear view starts with a node.</h2>
+        <p>No nodes have been added yet.</p>
+    </div>
+{% endfor %}

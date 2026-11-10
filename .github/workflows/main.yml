@@ -1,0 +1,68 @@
+name: GHCR PUSH
+
+on:
+  push:
+    branches: [main]
+
+env:
+  IMAGE_NAME: light-server-map
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        id: build_push
+        run: |
+          OWNER_LC="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          IMAGE_URI="ghcr.io/${OWNER_LC}/${IMAGE_NAME}:${GITHUB_SHA}"
+          echo "image_uri=$IMAGE_URI" >> "$GITHUB_OUTPUT"
+
+          docker build \
+            --build-arg APP_ENV="production" \
+            -t "$IMAGE_URI" \
+            -t "ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest" .
+
+          docker push "$IMAGE_URI"
+          docker push "ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest"
+
+      # Easy deploy on forked repos
+      # - name: Deploy on VPS
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   env:
+      #     IMAGE_URI: ${{ steps.build_push.outputs.image_uri }}
+      #     GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+      #     GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     username: ${{ secrets.VPS_USER }}
+      #     key: ${{ secrets.VPS_SSH_KEY }}
+      #     passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
+      #     script_stop: true
+      #     envs: IMAGE_URI,GHCR_USERNAME,GHCR_TOKEN
+      #     script: |
+      #       set -euxo pipefail
+
+      #       echo "${GHCR_TOKEN}" | sudo docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+
+      #       sudo docker pull "${IMAGE_URI}"
+
+      #       sudo docker volume create light-server-map-data >/dev/null
+
+      #       sudo docker rm -f light-server-map >/dev/null 2>&1 || true
+      #       sudo docker run -d --name light-server-map --restart unless-stopped -p 3001:3001 --mount source=light-server-map-data,target=/app/data ghcr.io/ereduvyge/light-server-map:latest
+      #       sudo docker ps --filter "name=light-server-map"

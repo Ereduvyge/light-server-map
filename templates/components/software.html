@@ -1,0 +1,14 @@
+{% set status = check_status(software.health_check_enabled, software.is_healthy, software.last_checked_at) %}
+<article class="software-card">
+    <img class="software-icon" src="{{ url_for('static', path='imgs/db.png' if software.type == 'database' else 'imgs/software.png') }}"
+         width="34" height="34" alt="">
+    <div class="software-info">
+        <p class="record-id">#{{ "%03d"|format(software.id) }} / {{ software.type }}</p>
+        <h3>{{ software.name }}</h3>
+        <p class="software-endpoint">{{ software.domain }} &middot; port {{ software.port }} &middot; {{ software.health_check_path }}</p>
+        <p class="last-checked">
+            {% if software.last_checked_at %}Checked {{ software.last_checked_at.strftime('%Y-%m-%d %H:%M:%S') }} UTC{% else %}Awaiting first check{% endif %}
+        </p>
+    </div>
+    <span class="status-label"><i class="status-dot {{ status.color }}" aria-hidden="true"></i>{{ status.label }}</span>
+</article>

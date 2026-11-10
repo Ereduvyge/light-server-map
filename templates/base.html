@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="A quiet, live view of your nodes and software health.">
+    <title>{% block title %}Light Server Map{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', path='imgs/node.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/map.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" defer></script>
+    <script src="{{ url_for('static', path='js/map.js') }}" defer></script>
+</head>
+<body hx-history="false">
+    {% block content %}{% endblock %}
+</body>
+</html>

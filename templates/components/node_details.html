@@ -1,0 +1,15 @@
+{% set status = check_status(node.ping_check_enabled, node.is_ping_ok, node.last_checked_at) %}
+<span hidden data-node-health="{{ node_health(node) }}"></span>
+<span class="node-topline">
+    <span class="node-icon"><img src="{{ url_for('static', path='imgs/node.png') }}" width="52" height="52" alt=""></span>
+    <span class="record-id">#{{ "%03d"|format(node.id) }}</span>
+</span>
+<span class="node-name">{{ node.name }}</span>
+<span class="node-ip">{{ node.ip }}</span>
+<span class="node-bottomline">
+    <span class="status-label"><i class="status-dot {{ status.color }}" aria-hidden="true"></i>{{ status.label }}</span>
+    <span class="software-count">{{ node.softwares|length }} software <span aria-hidden="true">&nearr;</span></span>
+</span>
+<span class="last-checked">
+    {% if node.last_checked_at %}Checked {{ node.last_checked_at.strftime('%H:%M:%S') }} UTC{% else %}Awaiting first check{% endif %}
+</span>

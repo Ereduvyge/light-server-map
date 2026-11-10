@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    image: light-server-map:local
+    ports:
+      - "3001:3001"
+    environment:
+      APP_ENV: production
+      DATABASE_URL: sqlite+aiosqlite:////app/data/monitor.db
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+    volumes:
+      - app-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  app-data:

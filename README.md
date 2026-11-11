@@ -3,13 +3,17 @@
 A small FastAPI + HTMX + Jinja2 + async SQLAlchemy monitor.
 
 Drag the handles to move cards on desktop.
+Node statuses and the open software dialog refresh every 10 seconds.
 
-Click or tap a node to open its software dialog.
-Close with Escape, the close button, or the backdrop. Node statuses and the open
-software dialog refresh every 10 seconds.
+![Map Screenshot](./.github/preview_imgs/map.png)
 
+Click or tap a node to open its software dialog. Close with Escape, the close button, or the backdrop.
 
-## Docker with persistent data
+![Sevrer Screenshot](./.github/preview_imgs/server.png)
+
+## Quickstart
+
+### Run light-server-map with docker (persistent data)
 
 Using the published GHCR image (easiest):
 
@@ -18,14 +22,14 @@ docker volume create light-server-map-data
 docker run -d --name light-server-map --restart unless-stopped -p 3001:3001 --mount source=light-server-map-data,target=/app/data ghcr.io/ereduvyge/light-server-map:latest
 ```
 
-Or fork repository, add actions secrets and run build.
+Or fork repository, add actions secrets (GITHUB_TOKEN at minimum) and run build.
 
 When updating, pull the image and recreate the container with the **same named
 volume**. Do not remove that volume. The workflow publishes both a commit SHA tag
 and `latest`, and its optional deployment example includes the data mount.
 
 
-Build and run with compose:
+### Build and run with compose
 
 ```sh
 docker compose up -d --build

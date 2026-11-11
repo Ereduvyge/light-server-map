@@ -186,8 +186,9 @@ h1 {
 .node-grid {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(6, minmax(0, 120px));
+    justify-content: center;
+    gap: 44px;
     padding: 8px 0 48px;
 }
 
@@ -274,7 +275,7 @@ h1 {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 24px;
+    padding: 18px;
     text-align: left;
     border: 0;
     border-radius: 14px;
@@ -288,8 +289,8 @@ h1 {
 
 .drag-handle {
     position: absolute;
-    top: 16px;
-    right: 14px;
+    top: 12px;
+    right: 10px;
     z-index: 1;
     padding: 3px 6px;
     border: 0;
@@ -310,17 +311,20 @@ h1 {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 24px;
+}
+
+.node-identity {
+    flex: 1;
+    min-width: 0;
+    padding-right: 18px;
 }
 
 .node-icon {
     display: grid;
     place-items: center;
-    width: 64px;
-    height: 64px;
-    border: 1px solid rgb(255 255 255 / 5%);
-    border-radius: 11px;
-    background: rgb(255 255 255 / 3%);
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
 }
 
 .node-icon img {
@@ -335,8 +339,10 @@ h1 {
 .node-name {
     display: block;
     overflow-wrap: anywhere;
-    margin-bottom: 7px;
-    font-size: 18px;
+    min-width: 0;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 1.35;
     font-weight: 550;
     letter-spacing: -0.025em;
 }
@@ -354,8 +360,8 @@ h1 {
     justify-content: space-between;
     gap: 8px;
     flex-wrap: wrap;
-    margin-top: 25px;
-    padding-top: 16px;
+    margin-top: 16px;
+    padding-top: 12px;
     border-top: 1px solid var(--border);
 }
 
@@ -366,6 +372,28 @@ h1 {
     color: #ccc;
     font-size: 11px;
     white-space: nowrap;
+}
+
+.node-status-label {
+    align-items: flex-start;
+    min-width: 0;
+    flex: 1;
+    white-space: normal;
+}
+
+.node-status-label .status-dot {
+    margin-top: 4px;
+}
+
+.node-status-copy {
+    line-height: 1.4;
+}
+
+.software-warning {
+    display: block;
+    margin-top: 3px;
+    color: #ed8c8c;
+    font-size: 10px;
 }
 
 .software-count {
@@ -546,10 +574,10 @@ h1 {
         padding: 40px 24px 24px;
     }
     .node-grid {
-        gap: 18px;
+        gap: 32px;
     }
     .node-button {
-        padding: 20px 16px;
+        padding: 16px;
     }
     .header-actions {
         flex-direction: column;
@@ -588,8 +616,8 @@ h1 {
         gap: 12px 16px;
     }
     .node-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 20px;
+        grid-template-columns: minmax(0, 284px);
+        gap: 28px;
         padding-bottom: 32px;
     }
     .node-card:nth-child(n) {
@@ -597,10 +625,10 @@ h1 {
         transform: none;
     }
     .node-button {
-        padding: 24px;
+        padding: 18px;
     }
-    .node-topline {
-        margin-bottom: 20px;
+    .node-identity {
+        padding-right: 0;
     }
     .drag-handle, #reset-layout, .desktop-hint {
         display: none;

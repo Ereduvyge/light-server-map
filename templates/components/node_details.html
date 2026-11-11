@@ -1,13 +1,23 @@
 {% set status = check_status(node.ping_check_enabled, node.is_ping_ok, node.last_checked_at) %}
-<span hidden data-node-health="{{ node_health(node) }}"></span>
+{% set health = node_health(node) %}
+<span hidden data-node-health="{{ health }}"></span>
 <span class="node-topline">
-    <span class="node-icon"><img src="{{ url_for('static', path='imgs/node.png') }}" width="52" height="52" alt=""></span>
-    <span class="record-id">#{{ "%03d"|format(node.id) }}</span>
+    <span class="node-icon"><img src="{{ url_for('static', path='imgs/node.png') }}" width="56" height="56" alt=""></span>
+    <span class="node-identity">
+        <span class="node-name">{{ node.name }}</span>
+        <span class="node-ip">{{ node.ip }}</span>
+    </span>
 </span>
-<span class="node-name">{{ node.name }}</span>
-<span class="node-ip">{{ node.ip }}</span>
 <span class="node-bottomline">
-    <span class="status-label"><i class="status-dot {{ status.color }}" aria-hidden="true"></i>{{ status.label }}</span>
+    <span class="status-label node-status-label">
+        <i class="status-dot {{ status.color }}" aria-hidden="true"></i>
+        <span class="node-status-copy">
+            {{ "Ping OK" if status.color == "healthy" else status.label }}
+            {% if status.color == "healthy" and health == "unhealthy" %}
+                <span class="software-warning">Check software failures</span>
+            {% endif %}
+        </span>
+    </span>
     <span class="software-count">{{ node.softwares|length }} software <span aria-hidden="true">&nearr;</span></span>
 </span>
 <span class="last-checked">

@@ -2,7 +2,7 @@
          hx-get="/components/nodes/{{ node.id }}/software"
          hx-trigger="every 10s" hx-target="this" hx-swap="outerHTML">
     <h2 id="software-dialog-title">{{ node.name }}</h2>
-    <p class="dialog-subtitle">Node #{{ node.id }} <span aria-hidden="true">&middot;</span> {{ node.ip }}</p>
+    <p class="dialog-subtitle">{{ node.ip }}</p>
     <div class="software-list">
         {% for software in node.softwares|sort(attribute='id') %}
             {% include "components/software.html" %}

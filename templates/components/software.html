@@ -3,7 +3,7 @@
     <img class="software-icon" src="{{ url_for('static', path='imgs/db.png' if software.type == 'database' else 'imgs/software.png') }}"
          width="34" height="34" alt="">
     <div class="software-info">
-        <p class="record-id">#{{ "%03d"|format(software.id) }} / {{ software.type }}</p>
+        <p class="record-id">{{ software.type }}</p>
         <h3>{{ software.name }}</h3>
         <p class="software-endpoint">{{ software.domain }} &middot; port {{ software.port }} &middot; {{ software.health_check_path }}</p>
         <p class="last-checked">
